@@ -19,10 +19,4 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('users')
 export class UserController {
 	constructor (public service: UserService) {}
-
-	@Get('itemsByUser')
-	getItemsByUser( @Body('userID', ParseIntPipe) userID: number ) {
-		console.log(userID);
-  		return this.service.getItemsByUser(userID);
-	}
 }
