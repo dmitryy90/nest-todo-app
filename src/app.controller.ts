@@ -1,17 +1,24 @@
-import { Controller, Get, Request, Post, UseGuards } from '@nestjs/common';
-import { AppService } from './app.service';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Request, Post, UseGuards, Body } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { AuthService } from './auth/auth.service';
 
+class userCreds {
+  @ApiProperty() 
+  public username: string;
+
+  @ApiProperty()
+  public password: string;
+}
+
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request() req) {
+  async login(@Body() Body: userCreds, @Request() req: any) {
     return this.authService.login(req.user);
   }
 
