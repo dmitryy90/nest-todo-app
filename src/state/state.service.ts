@@ -8,4 +8,9 @@ export class StateService extends TypeOrmCrudService<StateEntity> {
     constructor (@InjectRepository(StateEntity) repo) {
 		super(repo)
 	}
+
+	public async getStateName(id) {
+		const item: StateEntity = await this.findOne(id);
+		return item.name;
+	} 
 }
